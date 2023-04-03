@@ -61,7 +61,7 @@ jobs:
           path: |
             . 
             !venv/
-        working-directory: ./backend
+        
 
   deploy:
     needs: build
@@ -73,14 +73,14 @@ jobs:
         with:
           name: python-app
           path: .
-        working-directory: ./frontend
+        
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
-        working-directory: ./backend
+        
           
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
@@ -89,4 +89,4 @@ jobs:
           app-name: 'app-backend-usgunhunum63q'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63B9F69614CC4C42A7B3E386CC43DC40 }}
-        working-directory: ./backend
+        
