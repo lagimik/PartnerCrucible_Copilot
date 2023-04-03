@@ -49,7 +49,7 @@ jobs:
       # compress
 
       - name: Zip artifect for deployment
-        run: zip --exclude *venv/* release.zip ./* -r
+        run: zip  release.zip ./* -r --exclude *venv/*
 
       
       - name: Upload artifact for deployment jobs
