@@ -1,0 +1,3 @@
+./backlog/backend_env/*
+./backlog/__pycache__/*
+./frontend/node_modules/*
