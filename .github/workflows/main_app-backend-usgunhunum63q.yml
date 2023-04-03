@@ -55,13 +55,13 @@ jobs:
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
       - name: Upload artifact for deployment jobs
-        working-directory: ./backend
         uses: actions/upload-artifact@v2
         with:
           name: python-app
           path: |
             . 
             !venv/
+        working-directory: ./backend
 
   deploy:
     needs: build
@@ -69,24 +69,24 @@ jobs:
 
     steps:
       - name: Download artifact from build job (frontend)
-        working-directory: ./frontend
         uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
+        working-directory: ./frontend
 
       - name: Download artifact from build job
-        working-directory: ./backend
         uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
+        working-directory: ./backend
           
       - name: 'Deploy to Azure Web App'
-        working-directory: ./backend
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'app-backend-usgunhunum63q'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63B9F69614CC4C42A7B3E386CC43DC40 }}
+        working-directory: ./backend
