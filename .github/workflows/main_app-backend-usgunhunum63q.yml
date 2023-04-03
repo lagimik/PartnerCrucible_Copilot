@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+    
       - name: Set up Node.js version
         working-directory: ./frontend
         uses: actions/setup-node@v1
@@ -36,9 +38,7 @@ jobs:
           name: node-app
           path: .
 
-
-      - uses: actions/checkout@v2
-    
+     
       - name: Set up Python version
         working-directory: ./backend
         uses: actions/setup-python@v1
@@ -69,10 +69,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-      
+
     steps:
-    
-      - name: Download artifact from build job
+      - name: Download artifact from build job (frontend)
         working-directory: ./frontend
         uses: actions/download-artifact@v2
         with:
