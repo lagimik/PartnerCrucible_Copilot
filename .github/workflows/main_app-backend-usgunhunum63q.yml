@@ -70,27 +70,27 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
       
-      steps:
-      
-        - name: Download artifact from build job
-          working-directory: ./frontend
-          uses: actions/download-artifact@v2
-          with:
-            name: python-app
-            path: .
+    steps:
+    
+      - name: Download artifact from build job
+        working-directory: ./frontend
+        uses: actions/download-artifact@v2
+        with:
+          name: python-app
+          path: .
 
-        - name: Download artifact from build job
-          working-directory: ./backend
-          uses: actions/download-artifact@v2
-          with:
-            name: python-app
-            path: .
-            
-        - name: 'Deploy to Azure Web App'
-          working-directory: ./backend
-          uses: azure/webapps-deploy@v2
-          id: deploy-to-webapp
-          with:
-            app-name: 'app-backend-usgunhunum63q'
-            slot-name: 'Production'
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63B9F69614CC4C42A7B3E386CC43DC40 }}
+      - name: Download artifact from build job
+        working-directory: ./backend
+        uses: actions/download-artifact@v2
+        with:
+          name: python-app
+          path: .
+          
+      - name: 'Deploy to Azure Web App'
+        working-directory: ./backend
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'app-backend-usgunhunum63q'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63B9F69614CC4C42A7B3E386CC43DC40 }}
