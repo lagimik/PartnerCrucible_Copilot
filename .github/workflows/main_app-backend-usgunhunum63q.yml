@@ -37,8 +37,6 @@ jobs:
           path: .
 
 
-
-
       - uses: actions/checkout@v2
     
       - name: Set up Python version
@@ -71,10 +69,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-      
-
-      environment:
-        name: 'Production'
+    environment:
+      name: 'Production'
    
       steps:
       
