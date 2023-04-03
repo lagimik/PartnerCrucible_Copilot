@@ -69,9 +69,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: 'Production'
-   
+      
       steps:
       
         - name: Download artifact from build job
