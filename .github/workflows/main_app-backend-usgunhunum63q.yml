@@ -36,7 +36,7 @@ jobs:
         with:
           name: python-app
           path: .
-        working-directory: ./frontend
+      
 
       - name: Set up Python version
         working-directory: ./backend
