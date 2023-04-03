@@ -23,7 +23,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-        working-directory: ./frontend
 
       - name: npm install, build, and test
         run: |
@@ -39,7 +38,6 @@ jobs:
           name: python-app
           path: .
 
-     
       - name: Set up Python version
         working-directory: ./backend
         uses: actions/setup-python@v1
