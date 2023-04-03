@@ -52,15 +52,17 @@ jobs:
         run: pip install -r requirements.txt
         working-directory: ./backend
 
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      # compress
+
+      - name: Zip artifect for deployment
+        run: zip --exclude *venv/* release.zip ./* -r
+
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
           name: python-app
-          path: |
-            . 
-            !venv/
+          path: release.zip
         
 
   deploy:
@@ -73,6 +75,9 @@ jobs:
         with:
           name: python-app
           path: .
+
+      - name: unzip artifact for deployment
+        run: unzip release.zip
         
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
@@ -80,5 +85,5 @@ jobs:
         with:
           app-name: 'app-backend-usgunhunum63q'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63B9F69614CC4C42A7B3E386CC43DC40 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D605F273444949449FF7D52C549582A8 }}
         
