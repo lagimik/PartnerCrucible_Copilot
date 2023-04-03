@@ -69,10 +69,10 @@ jobs:
             !venv/
 
   deploy:
-
+    needs: build
     runs-on: ubuntu-latest
-      needs: build
       
+
       environment:
         name: 'Production'
    
