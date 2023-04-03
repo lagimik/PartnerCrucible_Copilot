@@ -17,12 +17,13 @@ jobs:
     steps:
       - name: Checkout front-end 
         uses: actions/checkout@v2
-        working-directory: ./frontend
+        
 
       - name: Set node version
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+        working-directory: ./frontend
 
       - name: npm install, build, and test
         run: |
