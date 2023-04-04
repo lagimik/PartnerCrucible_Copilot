@@ -4,7 +4,8 @@ import time
 import logging
 import openai
 from flask import Flask, request, jsonify
-from azure.identity import AzureDeveloperCliCredential
+#from azure.identity import AzureDeveloperCliCredential
+from azure.identity import ManagedIdentityCredential
 from azure.search.documents import SearchClient
 from approaches.retrievethenread import RetrieveThenReadApproach
 from approaches.readretrieveread import ReadRetrieveReadApproach
@@ -29,7 +30,8 @@ KB_FIELDS_SOURCEPAGE = os.environ.get("KB_FIELDS_SOURCEPAGE") or "sourcepage"
 # just use 'az login' locally, and managed identity when deployed on Azure). If you need to use keys, use separate AzureKeyCredential instances with the
 # keys for each service
 # If you encounter a blocking error during a DefaultAzureCredntial resolution, you can exclude the problematic credential by using a parameter (ex. exclude_shared_token_cache_credential=True)
-azure_credential = AzureDeveloperCliCredential(tenant_id='16b3c013-d300-468d-ac64-7eda0820b6d3')
+#azure_credential = AzureDeveloperCliCredential(tenant_id='16b3c013-d300-468d-ac64-7eda0820b6d3')
+azure_credential = ManagedIdentityCredential()
 
 # Used by the OpenAI SDK
 openai.api_type = "azure"
