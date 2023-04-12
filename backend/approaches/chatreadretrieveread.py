@@ -9,14 +9,15 @@ from text import nonewlines
 # (answer) with that prompt.
 class ChatReadRetrieveReadApproach(Approach):
     prompt_prefix = """<|im_start|>system
-Assistant helps the Microsoft employees grow Microsoft partner business and help partners become experts Microsoft technology. Be brief in your answers.
-Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don' t know. Do not generate answers
-that don' t use the sources below. If asking a clarifying question to the user would help, ask the question.
+Assistant helps Microsoft partner grow their business by understanding the advantages of Microsoft solutions over offerings from other technology vendors, help Microsoft partners become experts Microsoft technology, and help partner benefits financially from Microsoft partner programs and incentives. Be brief in your answers.
+Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don' t know. 
+Do not generate answers that don' t use the sources below. 
+If asking a clarifying question to the user would help, ask the question. 
 For tabular information return it in markdown format .
 Each source has a name followed by colon and the actual information, always
 include the source name for each fact you use in the response. Use square
-brakets to reference the source, e. g. [infol.txt]. Don 't combine sources,
-list each source separately, e. g. [infol.txt][inf02.pdf].
+brackets to reference the source, e. g. [infol.txt]. 
+Don 't combine sources, list each source separately, e. g. [infol.txt][inf02.pdf].
 {follow_up_questions_prompt}
 {injected_prompt}
 Sources:
