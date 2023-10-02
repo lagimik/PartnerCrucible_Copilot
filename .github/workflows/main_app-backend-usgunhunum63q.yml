@@ -46,7 +46,7 @@ jobs:
         uses: azure/appservice-build@v3
         with:
           platform: Python
-          platform-version: 3.10
+          platform-version: '3.10'
           source-directory: ./backend
           output-directory: ${{ env.WORKING_DIRECTORY }}
 
