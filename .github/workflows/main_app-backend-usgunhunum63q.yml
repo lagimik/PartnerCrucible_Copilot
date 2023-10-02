@@ -13,7 +13,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: app-backend-usgunhunum63q
-  WORKING_DIRECTORY: '.'        # set this to the path to your path of working directory inside github repository, defaults to the repository root
+  WORKING_DIRECTORY: './Release'        # set this to the path to your path of working directory inside github repository, defaults to the repository root
   PYTHON_VERSION: '3.10'        # set the version to use
   STARTUP_COMMAND: ''           # set this to the startup command required to start the gunicorn server. default it is empty
 
@@ -38,49 +38,19 @@ jobs:
         working-directory: ./frontend
 
       - name: Set up Python version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-        working-directory: ./backend
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        working-directory: ./backend
-
-      # compress
-
-      - name: Zip artifect for deployment
-        run: zip release.zip -r ./* --exclude *venv/*
-        working-directory: ./backend
-
-
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v2
-        with:
-          name: python-app
-          path: ./backend/release.zip
-
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download artifact from build job (consolidated)
-        uses: actions/download-artifact@v2
-        with:
-          name: python-app
-          path: .
-
-      - name: unzip artifact for deployment
-        run: unzip release.zip
-
       
+      - name: Building web app
+        uses: azure/appservice-build@v3
+        with:
+          platform: Python
+          platform-version: 3.10
+          source-directory: ./backend
+          output-directory: ${{ env.WORKING_DIRECTORY }}
+
+          
       - name: Azure Login
         uses: azure/login@v1
         with:
