@@ -11,6 +11,12 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_NAME: app-backend-usgunhunum63q
+  WORKING_DIRECTORY: '.'        # set this to the path to your path of working directory inside github repository, defaults to the repository root
+  PYTHON_VERSION: '3.10'        # set the version to use
+  STARTUP_COMMAND: ''           # set this to the startup command required to start the gunicorn server. default it is empty
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -74,10 +80,29 @@ jobs:
       - name: unzip artifact for deployment
         run: unzip release.zip
 
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}
+  
+      - name: App SErvice Settings
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          mask-inputs: false
+          general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}"}' #'General configuration settings as Key Value pairs'
+
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'app-backend-usgunhunum63q'
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.WORKING_DIRECTORY }}
+          startup-command: ${{ env.STARTUP_COMMAND }}
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+
+      - name: Azure Logout
+        run: |
+          az logout
