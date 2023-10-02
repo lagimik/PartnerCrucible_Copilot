@@ -5,6 +5,9 @@
 name: Build and deploy Python app to Azure Web App - app-backend-usgunhunum63q
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -23,18 +26,18 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-
+      
       - name: Install dependencies
-        run: pip install -r backend/requirements.txt
-
+        run: pip install -r requirements.txt
+        
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
+      
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
           name: python-app
           path: |
-            .
+            . 
             !venv/
 
   deploy:
@@ -50,11 +53,11 @@ jobs:
         with:
           name: python-app
           path: .
-
+          
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'app-backend-usgunhunum63q'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DEFAE75EFB32431E9A4D3173F743D96F }}
